@@ -1,0 +1,11 @@
+*.o
+fd2pragma
+make_stubs.sh
+testsize
+fd2pragma.types
+sofia.library
+test_sofialib
+file_list_test
+dos_compat_test
+filereq_demo
+sofialib_demo

@@ -1,0 +1,3 @@
+[submodule "libsrc/chibi_test"]
+	path = libsrc/chibi_test
+	url = https://github.com/weiju/chibi_test.git

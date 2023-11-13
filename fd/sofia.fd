@@ -1,0 +1,5 @@
+##base _SofiaBase
+##bias 30
+##public
+SOFIA_OpenFileReq(window,title,confirm_text)(D1/D2/D3)
+##end

@@ -23,4 +23,5 @@ so it makes sense to support this first.
 ## Acknowledgements
 
 Special thanks to Frank Wille (phx) for all his support and advice to
-understand how to get this library working under Amiga OS 1.3
+understand the details of the VBCC/VLINK/VASM toolchain which was
+instrumental in getting this library working under Amiga OS 1.3

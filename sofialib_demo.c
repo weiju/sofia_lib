@@ -1,20 +1,4 @@
-/* main.c - requester demo application
-
-   This file is part of amiga-stuff.
-
-   amiga-stuff is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   amiga-stuff is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with amiga30yrs.  If not, see <http://www.gnu.org/licenses/>.
- */
+/* sofialib_demo.c - SOFIA file requester demo application */
 #include <string.h>
 #include <stdlib.h>
 
@@ -47,7 +31,7 @@
 #define OPEN_MENU_ITEM_NUM  0
 #define QUIT_MENU_ITEM_NUM  1
 
-struct SofiaBase *SofiaBase = NULL;
+struct Library *SofiaBase = NULL;
 
 static struct NewWindow newwin = {
   WIN_LEFT, WIN_TOP, WIN_WIDTH, WIN_HEIGHT, 0, 1,
@@ -91,7 +75,10 @@ static BOOL handle_menu(UWORD menuNum, UWORD itemNum, UWORD subItemNum)
 {
     if (menuNum == FILE_MENU_NUM && itemNum == QUIT_MENU_ITEM_NUM) return TRUE;
     if (menuNum == FILE_MENU_NUM && itemNum == OPEN_MENU_ITEM_NUM) {
-        SOFIA_OpenFileReq(window, "Open file...", "Open");
+        const char *selfile = SOFIA_OpenFileReq(window, "Open file...", "Open");
+        if (selfile) {
+            printf("Selected file: '%s'\n", selfile);
+        }
     }
     return FALSE;
 }
@@ -134,8 +121,9 @@ static void setup_menu()
     txHeight = rp->TxHeight;
     txBaseline = rp->TxBaseline;
     txSpacing = rp->TxSpacing;
+    /*
     printf("TxWidth: %d, TxHeight: %d, TxBaseline: %d, TxSpacing: %d\n",
-           (int) txWidth, (int) txHeight, (int) txBaseline, (int) txSpacing);
+    (int) txWidth, (int) txHeight, (int) txBaseline, (int) txSpacing);*/
 
     /* Set file menu bounds */
     menus[0].Width = TextLength(rp, "File", strlen("File")) + txWidth;
@@ -157,12 +145,11 @@ static void setup_menu()
 
 int main(int argc, char **argv)
 {
-    SofiaBase = (APTR) OpenLibrary("sofia.library", 0);
+    SofiaBase = OpenLibrary("sofia.library", 0);
     if (!SofiaBase) {
         printf("Could not open sofia.library !!!!\n");
         exit(0);
     }
-    /* version: e.g. 34, revision e.g. 3 for Kickstart 1.3 */
 
     /* Adjust the new screen according to the IFF image */
     if (window = OpenWindow(&newwin)) {
